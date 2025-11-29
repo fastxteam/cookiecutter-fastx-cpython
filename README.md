@@ -1,13 +1,13 @@
-# Cookiecutter PyPackage
+# Cookiecutter FastX CPython
 
 [![PyPI version](https://img.shields.io/pypi/v/cookiecutter-pypackage.svg)](https://pypi.python.org/pypi/cookiecutter-pypackage)
 [![PyPI downloads](https://img.shields.io/pypi/dm/cookiecutter-pypackage.svg)](https://pypi.python.org/pypi/cookiecutter-pypackage)
 
 [Cookiecutter](https://github.com/cookiecutter/cookiecutter) template for a Python package.
 
-*   GitHub repo: [https://github.com/audreyfeldroy/cookiecutter-pypackage/](https://github.com/audreyfeldroy/cookiecutter-pypackage/)
+*   GitHub repo: [https://github.com/fastxteam/cookiecutter-fastx-cpython.git/](https://github.com/fastxteam/cookiecutter-fastx-cpython.git)
 *   Free software: MIT license
-*   Discord: [https://discord.gg/PWXJr3upUE](https://discord.gg/PWXJr3upUE)
+*   Discord: N.A
 
 ## Features
 
@@ -27,7 +27,7 @@ pip install -U cookiecutter
 Generate a Python package project:
 
 ```bash
-cookiecutter https://github.com/audreyfeldroy/cookiecutter-pypackage.git
+cookiecutter https://github.com/fastxteam/cookiecutter-fastx-cpython.git
 ```
 
 Then:
@@ -49,7 +49,7 @@ be a fork.
 
 ### Similar Cookiecutter Templates
 
-Explore other forks to get ideas. See the [network](https://github.com/audreyfeldroy/cookiecutter-pypackage/network) and [family tree](https://github.com/audreyfeldroy/cookiecutter-pypackage/network/members) for this repo.
+Explore other forks to get ideas. See the [network](https://github.com/fastxteam/cookiecutter-fastx-cpython/network) and [family tree](https://github.com/fastxteam/cookiecutter-fastx-cpython/network/members) for this repo.
 
 ### Or Submit a Pull Request
 

@@ -8,7 +8,7 @@ You can contribute in many ways:
 
 ### Report Bugs
 
-Report bugs at https://github.com/audreyfeldroy/cookiecutter-pypackage/issues
+Report bugs at https://github.com/fastxteam/cookiecutter-fastx-cpython/issues
 
 If you are reporting a bug, please include:
 
@@ -30,7 +30,7 @@ Cookiecutter PyPackage could always use more documentation, whether as part of t
 
 ### Submit Feedback
 
-The best way to send feedback is to file an issue at https://github.com/audreyfeldroy/cookiecutter-pypackage/issues.
+The best way to send feedback is to file an issue at https://github.com/fastxteam/cookiecutter-fastx-cpython/issues.
 
 If you are proposing a new feature:
 
@@ -40,4 +40,4 @@ If you are proposing a new feature:
 
 ## Get Started!
 
-Ready to contribute? Here's how to set up `cookiecutter-pypackage` for local development. Please note this documentation assumes you already have ...
+Ready to contribute? Here's how to set up `cookiecutter-fastx-cpython` for local development. Please note this documentation assumes you already have ...
