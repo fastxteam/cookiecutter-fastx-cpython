@@ -16,8 +16,8 @@ extensions = [
 ]
 
 setup(
-    name="fastx_demo",
-    version="0.1.0",
+    name="{{ cookiecutter.project_slug }}",
+    version="{{ cookiecutter.project_version }}",
     packages=find_packages(where="src"),  # src 下所有包
     package_dir={"": "src"},  # 告诉 setuptools src 是根包目录
     ext_modules=cythonize(extensions),

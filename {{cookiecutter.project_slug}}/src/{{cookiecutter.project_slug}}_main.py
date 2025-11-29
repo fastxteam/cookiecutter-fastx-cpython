@@ -7,9 +7,11 @@ Description: Main CLI entry
 """
 
 from api.api import *
+import warnings
+warnings.filterwarnings('ignore', category=UserWarning)
 
 def main():
-    print("Hello from fastx-cpython-template-cookitecutter!")
+    core_init()
 
 
 if __name__ == "__main__":
