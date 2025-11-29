@@ -1,0 +1,19 @@
+[project]
+name = "{{ cookiecutter.project_slug }}"
+version = "{{ cookiecutter.project_version }}"
+description = "{{ cookiecutter.project_description }}"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    {name = "{{ cookiecutter.author_name }}"},
+]
+dependencies = [
+    "cython>=3.2.1",
+    "loguru>=0.7.3",
+    "setuptools>=80.9.0",
+    "typer>=0.20.0",
+]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel", "Cython>=0.29.0"]
+build-backend = "setuptools.build_meta"

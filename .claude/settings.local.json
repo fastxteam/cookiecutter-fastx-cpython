@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(cat:*)",
+      "Bash(git checkout:*)",
+      "Bash(chmod:*)",
+      "Bash(uv run python setup.py:*)",
+      "Bash(cookiecutter:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

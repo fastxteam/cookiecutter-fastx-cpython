@@ -1,6 +1,12 @@
 {
-    "project_name": "MyDemo",
-    "author_name": "Your Name",
-    "version": "0.1.0",
-    "description": "FastXTeam/Cookiecutter-FastX-CPython-Project"
+  "project_name": "FastX_Demo",
+  "project_slug": "fastx_demo",
+  "project_version": "0.1.0",
+  "project_description": "FastXTeam/Cookiecutter-FastX-CPython-Project",
+  "author_name": "FastXTeam/wanqiang.liu",
+  "python_version": "3.11",
+  "include_cli": ["yes", "no"],
+  "include_pyinstaller": ["yes", "no"],
+  "include_vendor_auth_gate": ["yes", "no"],
+  "date": ""
 }

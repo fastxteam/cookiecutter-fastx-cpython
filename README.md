@@ -1,57 +1,224 @@
 # Cookiecutter FastX CPython
 
-[![PyPI version](https://img.shields.io/pypi/v/cookiecutter-pypackage.svg)](https://pypi.python.org/pypi/cookiecutter-pypackage)
-[![PyPI downloads](https://img.shields.io/pypi/dm/cookiecutter-pypackage.svg)](https://pypi.python.org/pypi/cookiecutter-pypackage)
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/downloads/)
+[![uv](https://img.shields.io/badge/uv-package%20manager-purple)](https://docs.astral.sh/uv/)
+[![Cython](https://img.shields.io/badge/cython-performance-orange)](https://cython.org/)
+[![PyInstaller](https://img.shields.io/badge/pyinstaller-executable%20build-green)](https://pyinstaller.org/)
 
-[Cookiecutter](https://github.com/cookiecutter/cookiecutter) template for a Python package.
+A modern Cookiecutter template for creating high-performance Python projects with Cython extensions and PyInstaller packaging.
 
-*   GitHub repo: [https://github.com/fastxteam/cookiecutter-fastx-cpython.git/](https://github.com/fastxteam/cookiecutter-fastx-cpython.git)
-*   Free software: MIT license
-*   Discord: N.A
+## 🚀 Features
 
-## Features
+- **Performance-First Design**: Core algorithms implemented in Cython for maximum speed
+- **Modern Package Management**: Full [uv](https://docs.astral.sh/uv/) integration with pip fallback
+- **Smart Loading**: Automatic fallback from compiled Cython (.pyd/.so) to Python implementations
+- **Executable Creation**: Complete PyInstaller setup for standalone executables
+- **Development Tools**: Pre-configured with pytest, black, isort, flake8, mypy
+- **CI/CD Ready**: GitHub Actions workflows for testing and PyPI publishing
+- **Cross-Platform**: Works on Windows, macOS, and Linux
 
-*   Testing setup with pytest
-*   GitHub Actions testing: Setup to easily test for Python 3.10, 3.11, 3.12, and 3.13
-*   Auto-release to [PyPI](https://pypi.python.org/pypi) when you push a new tag to master (optional)
-*   Command line interface using Typer
+## 🏗️ Architecture
 
-## Quickstart
-
-Install the latest Cookiecutter if you haven't installed it yet:
-
-```bash
-pip install -U cookiecutter
+```
+{{cookiecutter.project_slug}}/
+├── src/
+│   ├── main.py                 # CLI entry point
+│   ├── api/                    # Public API interfaces
+│   ├── core/                   # Core algorithms (Cython/Python dual implementation)
+│   └── utils/                  # Utility functions
+├── pyproject.toml              # Modern Python project configuration
+├── setup.py                    # Cython build configuration
+├── uv.lock                     # Dependency lock file
+└── pyinstaller_build/          # Executable build scripts
 ```
 
-Generate a Python package project:
+## 🎯 Quick Start
+
+### Prerequisites
+
+- Python 3.10+
+- [Cookiecutter](https://github.com/cookiecutter/cookiecutter)
+- [uv](https://docs.astral.sh/uv/getting-started/installation/) (recommended) or pip
+
+### Generate Your Project
 
 ```bash
+# Install cookiecutter if you haven't
+pip install cookiecutter
+
+# Generate your project
 cookiecutter https://github.com/fastxteam/cookiecutter-fastx-cpython.git
+
+# Follow the prompts to configure your project
 ```
 
-Then:
+### Development Setup
 
-*   Create a repo and put it there.
-*   [Register](https://packaging.python.org/tutorials/packaging-projects/#uploading-the-distribution-archives) your project with PyPI.
-*   Add the repo to your [Read the Docs](https://readthedocs.io/) account + turn on the Read the Docs service hook.
-*   Release your package by pushing a new tag to master.
+The template automatically sets up everything you need:
 
-## Not Exactly What You Want?
+```bash
+cd your_project_name
 
-Don't worry, you have options:
+# If using uv (recommended)
+uv sync
+uv run python setup.py build_ext --inplace
 
-### Fork This / Create Your Own
+# If using pip
+pip install -e .
+python setup.py build_ext --inplace
 
-If you have differences in your preferred setup, I encourage you to fork this
-to create your own version. Or create your own; it doesn't strictly have to
-be a fork.
+# Run your application
+uv run python -m src.main
+# or
+python -m src.main
+```
 
-### Similar Cookiecutter Templates
+## 🔧 Cython Integration
 
-Explore other forks to get ideas. See the [network](https://github.com/fastxteam/cookiecutter-fastx-cpython/network) and [family tree](https://github.com/fastxteam/cookiecutter-fastx-cpython/network/members) for this repo.
+This template provides a unique dual-implementation approach:
 
-### Or Submit a Pull Request
+1. **Development**: Use Python implementation in `src/core/core.py`
+2. **Production**: Cython implementation in `src/core/core.pyx` automatically compiled
+3. **Smart Loading**: The `src/core/__init__.py` loader prioritizes compiled extensions: `.pyd > .so > .py > .pyx`
 
-I also accept pull requests on this, if they're small, atomic, and if they
-make my own packaging experience better.
+### Building Cython Extensions
+
+```bash
+# Build extensions
+python setup.py build_ext --inplace
+
+# Clean and rebuild
+python setup.py clean --all
+python setup.py build_ext --inplace --force
+```
+
+## 📦 Creating Executables
+
+Build standalone executables with PyInstaller:
+
+```bash
+# Make the build script executable
+chmod +x pyinstaller_build/build_exe.sh
+
+# Build executable
+./pyinstaller_build/build_exe.sh
+
+# Find your executable in dist/
+```
+
+## 🧪 Development Workflow
+
+### Adding Dependencies
+
+```bash
+# With uv
+uv add package_name
+uv add --dev pytest-mock  # Development dependency
+
+# With pip
+pip install package_name
+pip freeze > requirements.txt
+```
+
+### Running Tests
+
+```bash
+# Run all tests
+uv run pytest
+# or
+pytest
+
+# With coverage
+uv run pytest --cov=src --cov-report=html
+```
+
+### Code Quality
+
+```bash
+# Format code
+uv run black src/
+uv run isort src/
+
+# Lint
+uv run flake8 src/
+
+# Type checking
+uv run mypy src/
+```
+
+## 📋 Template Options
+
+When generating a project, you'll be prompted for:
+
+- `project_name`: Human-readable project name
+- `project_slug`: Package/directory name (must be valid Python identifier)
+- `author_name`: Your name or organization
+- `python_version`: Target Python version (3.10, 3.11, 3.12, 3.13)
+- `include_cli`: Whether to include CLI interface (Typer)
+- `include_pyinstaller`: Whether to include PyInstaller setup
+- `include_vendor_auth_gate`: Whether to include vendor authentication
+
+## 🚢 Deployment
+
+### PyPI Publishing
+
+The template includes GitHub Actions workflows for automatic PyPI publishing:
+
+1. Push a new tag to trigger the release workflow
+2. The package will be built and published to PyPI automatically
+
+### Manual Publishing
+
+```bash
+# Build distribution
+uv run python -m build
+
+# Upload to PyPI
+uv run twine upload dist/*
+```
+
+## 🛠️ Advanced Usage
+
+### Custom Cython Configuration
+
+Modify `setup.py` to add more Cython extensions:
+
+```python
+extensions = [
+    Extension("core.algorithm", ["src/core/algorithm.pyx"]),
+    Extension("utils.fast_math", ["src/utils/fast_math.pyx"]),
+]
+```
+
+### PyInstaller Customization
+
+Edit `pyinstaller_build/build_exe.sh` to:
+- Add data files
+- Include hidden imports
+- Customize executable metadata
+- Configure build options
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+## 📄 License
+
+This template is released under the MIT License. See [LICENSE](LICENSE) for details.
+
+## 🆘 Support
+
+- 📖 **Documentation**: Check the generated project's README.md
+- 🐛 **Issues**: [GitHub Issues](https://github.com/fastxteam/cookiecutter-fastx-cpython/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/fastxteam/cookiecutter-fastx-cpython/discussions)
+
+## 🔄 Similar Templates
+
+If this template doesn't fit your needs, check out these alternatives:
+- [cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage) - General Python package template
+- [cookiecutter-cython](https://github.com/danielcelis/cookiecutter-cython) - Cython-focused template
+- [cookiecutter-pyinstaller](https://github.com/brentvollebregt/cookiecutter-pyinstaller) - PyInstaller-focused template
+
+---
+
+**Made with ❤️ by the FastX Team**
