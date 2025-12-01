@@ -14,4 +14,7 @@ pip install -e .
 
 # 方法2：在项目根目录执行 | 直接编译
 python setup.py build_ext --inplace
+
+# 正确运行 | 避免包路径问题
+python -m src.{{cookiecutter.project_slug}}_main
 ```
