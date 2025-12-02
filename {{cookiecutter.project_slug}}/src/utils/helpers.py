@@ -1,10 +1,15 @@
 import os
 import shutil
 import zipfile
+import base64
 from datetime import datetime
 from pypinyin import pinyin, Style
 from typing import Any, Iterable, Callable
 from typing_extensions import Annotated  # Python <3.10 使用 typing_extensions
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
+from Crypto.Random import get_random_bytes
+from config import *
 
 try:
     import pyzipper  # 可选 AES 加密
@@ -24,6 +29,87 @@ class ParamInfo:
         self.description = description
         self.deprecated = deprecated
 
+
+# --------------------
+# AES 加密（文件）
+# --------------------
+def aes_encrypt_file(
+    input_path: Annotated[str, ParamInfo("Input file path / 输入文件路径")],
+    output_path: Annotated[str, ParamInfo("Output encrypted file path / 输出加密文件路径")]
+) -> None:
+    """
+    Encrypt file using AES-CBC.
+    使用 AES-CBC 加密文件
+    """
+    # 读取原始文件
+    with open(input_path, "rb") as f:
+        plaintext = f.read()
+
+    # 生成随机 IV（16 字节）
+    iv = get_random_bytes(16)
+
+    cipher = AES.new(AES_KEY, AES.MODE_CBC, iv)
+    ciphertext = cipher.encrypt(pad(plaintext, AES.block_size))
+
+    # 文件格式：IV + ciphertext
+    with open(output_path, "wb") as f:
+        f.write(iv + ciphertext)
+
+
+# --------------------
+# AES 解密（文件）
+# --------------------
+def aes_decrypt_file(
+    input_path: Annotated[str, ParamInfo("Encrypted file path / 加密文件路径")],
+    output_path: Annotated[str, ParamInfo("Output decrypted file path / 输出解密文件路径")]
+) -> None:
+    """
+    Decrypt AES-CBC encrypted file.
+    解密 AES-CBC 加密的文件
+    """
+    with open(input_path, "rb") as f:
+        encrypted_data = f.read()
+
+    iv = encrypted_data[:16]
+    ciphertext = encrypted_data[16:]
+
+    cipher = AES.new(AES_KEY, AES.MODE_CBC, iv)
+    plaintext = unpad(cipher.decrypt(ciphertext), AES.block_size)
+
+    with open(output_path, "wb") as f:
+        f.write(plaintext)
+
+
+# --------------------
+# AES 加密（字符串/字节）
+# --------------------
+def aes_encrypt_bytes(
+    data: Annotated[bytes, ParamInfo("Raw bytes to encrypt / 待加密字节数据")]
+) -> bytes:
+    """
+    Encrypt raw bytes with AES-CBC.
+    使用 AES-CBC 加密字节数据
+    """
+    iv = get_random_bytes(16)
+    cipher = AES.new(AES_KEY, AES.MODE_CBC, iv)
+    ciphertext = cipher.encrypt(pad(data, AES.block_size))
+    return iv + ciphertext
+
+
+# --------------------
+# AES 解密（字符串/字节）
+# --------------------
+def aes_decrypt_bytes(
+    encrypted: Annotated[bytes, ParamInfo("Encrypted bytes / 加密字节数据")]
+) -> bytes:
+    """
+    Decrypt AES-CBC encrypted bytes.
+    解密 AES-CBC 加密的字节数据
+    """
+    iv = encrypted[:16]
+    ciphertext = encrypted[16:]
+    cipher = AES.new(AES_KEY, AES.MODE_CBC, iv)
+    return unpad(cipher.decrypt(ciphertext), AES.block_size)
 
 # --------------------
 # 名字转换
